@@ -33,7 +33,7 @@ foreach($arr as $line){
 
     $baseUrl = 'https://d2k9z4241j7cyd.cloudfront.net/';
     $basePath = '/home/gce3/nc/OrderImage/';
-    $filename = $basePath.$barCode.".png";
+    $filename = $basePath.$pId.".png";
     if (file_exists($filename)) {
         echo "The file $filename exists\n";
         $nFileName = $baseUrl.$pId.".png";
