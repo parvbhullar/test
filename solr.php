@@ -51,9 +51,9 @@ $keyword = isset($argv[1]) ? $argv[1] : "*";
 $nq = $keyword;
 if (strpos($keyword,' ') !== false) {
     echo 'true';
-    $nq = str_replace(" ", " ", $keyword);
+    $nq = str_replace(" ", "*", trim($keyword));
 }
-$q = ("(name:($nq)) OR (name_s:\"$keyword\")^5 OR (name_suggester:\"$keyword\")^5");
+$q = ("(name:($nq*)) OR (name_s:\"$keyword\")^5");
 
 // apply settings using the API
 $query->setQuery($q);
