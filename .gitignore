@@ -1,0 +1,9 @@
+OrderImage/
+OrderImage/*
+
+
+# directories
+.idea
+.project
+vendor/
+composer.lock
