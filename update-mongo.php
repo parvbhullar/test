@@ -37,14 +37,16 @@ foreach($arr as $line){
     if (file_exists($filename)) {
         echo "The file $filename exists\n";
         $nFileName = $baseUrl.$pId.".png";
-        echo "New file url is ". $nFileName;
+        echo "New file url is ". $nFileName."\n";
+        $collection->update(array("_id" => new MongoId($pId)), array('$set'=> array("imageUrl" => $nFileName)));
     } else {
         $nCount++;
         $nFileName = $baseUrl.$barCode.".png";
-        echo "New file url is ". $nFileName;
+        echo "File not exists, not changing url - ". $nFileName."\n";
     }
-    $collection->update(array("_id" => new MongoId($pId)), array('$set'=> array("imageUrl" => $nFileName)));
-    break;
+    $nCount++;
+    if($nCount > 2)
+        break;
 }
 
 //http://ninjaorderimages.s3-us-west-2.amazonaws.com/OrderImage/
