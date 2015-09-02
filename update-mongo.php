@@ -39,12 +39,13 @@ foreach($arr as $line){
         $nFileName = $baseUrl.$pId.".png";
         echo "New file url is ". $nFileName."\n";
         $collection->update(array("_id" => new MongoId($pId)), array('$set'=> array("imageUrl" => $nFileName)));
+        $nCount++;
     } else {
         $nCount++;
         $nFileName = $baseUrl.$barCode.".png";
         echo "File not exists, not changing url - ". $nFileName."\n";
     }
-    $nCount++;
+
     if($nCount > 2)
         break;
 }
