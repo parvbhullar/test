@@ -32,6 +32,7 @@ foreach($arr as $line){
     $pId = trim($lArr[1]);
 
     $baseUrl = 'https://d2k9z4241j7cyd.cloudfront.net/';
+    $basePath = '/home/gce3/nc/OrderImage/';
     $filename = $basePath.$barCode.".png";
     if (file_exists($filename)) {
         echo "The file $filename exists\n";
@@ -39,7 +40,7 @@ foreach($arr as $line){
         echo "New file url is ". $nFileName;
     } else {
         $nCount++;
-        $nFileName = $baseUrl.$pId.".png";
+        $nFileName = $baseUrl.$barCode.".png";
         echo "New file url is ". $nFileName;
     }
     $collection->update(array("_id" => new MongoId($pId)), array('$set'=> array("imageUrl" => $nFileName)));
