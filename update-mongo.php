@@ -45,8 +45,8 @@ foreach($arr as $line){
         echo "File not exists, not changing url - ". $nFileName."\n";
     }
 
-    if($nCount > 2)
-        break;
+//    if($nCount > 2)
+//        break;
 }
 
 //http://ninjaorderimages.s3-us-west-2.amazonaws.com/OrderImage/
