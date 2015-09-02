@@ -13,7 +13,7 @@ $content = file_get_contents($file);
 $arr = explode("\n", $content);
 $nCount = 0;
 
-$dbhost = '188.40.100.77'; //188.40.100.77  QA, 178.63.79.68 Prod
+$dbhost = '178.63.79.68'; //188.40.100.77  QA, 178.63.79.68 Prod
 $dbname = 'NinjaCart';
 
 // Connect to test database
@@ -31,7 +31,7 @@ foreach($arr as $line){
     $barCode = trim($lArr[0]);
     $pId = trim($lArr[1]);
 
-    $baseUrl = 'https://d2k9z4241j7cyd.cloudfront.net/';
+    $baseUrl = 'http://d2k9z4241j7cyd.cloudfront.net/';
     $basePath = '/home/gce3/nc/OrderImage/';
     $filename = $basePath.$pId.".png";
     if (file_exists($filename)) {

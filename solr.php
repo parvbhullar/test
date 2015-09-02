@@ -48,16 +48,9 @@ $keyword = isset($argv[1]) ? $argv[1] : "*";
 //    }
 //}
 
-$nq = $keyword;
-if (strpos($keyword,' ') !== false) {
-    echo 'true';
-    $nq = str_replace(" ", "*", trim($keyword));
-}
-$q = ("(name:($nq*)) OR (name_s:\"$keyword\")^5");
-
 // apply settings using the API
-$query->setQuery($q);
-$query->setStart($offset)->setRows($limit);
+//$query->setQuery($q);
+//$query->setStart($offset)->setRows($limit);
 //$query->setFields(array('id','name','price'));
 //$query->addSort('price', $query::SORT_ASC);
 
@@ -65,9 +58,21 @@ $query->setStart($offset)->setRows($limit);
 
 //print_r(json_decode($resultset->getResponse()->getBody(), true));
 //
-$aq = urlencode("name:(Onion OR Pickle)");
+
+//$keyword = trim(getField('matchingText'));
+$nq = $keyword;
+//if (strpos($keyword,' ') !== false) {
+////    echo 'true';
+//    $nq = str_replace(" ", " ", trim($keyword));
+//}
+
+$partnerId = "55787dcbf41d992b0e8d3e46";
+
+$q = ("(name:($nq)) OR (name:($nq*)) OR (name_s:($keyword*)^5)");
+$q = "($q) AND (partnerId:$partnerId)";
 $q = urlencode($q);
-$url = "http://$server:8080/solr/collectionv2/select?q=$q&rows=$limit&start=$offset&wt=json&indent=true";
+//$url = "http://$server:8080/solr/collectionv2/select?q=$q&rows=$limit&start=$offset&wt=json&indent=true";
+$url = "http://188.40.100.77:8080/solr/collectionv2/select?q=$q&rows=$limit&start=$offset&wt=json&indent=true";
 $code = json_decode(file_get_contents($url),true);
 
 print_r($code);
