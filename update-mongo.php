@@ -42,7 +42,7 @@ foreach($arr as $line){
         $nFileName = $baseUrl.$pId.".png";
         echo "New file url is ". $nFileName;
     }
-    $collection->update(array("_id" => $pId), array('$set'=> array("imageUrl" => $nFileName)));
+    $collection->update(array("_id" => new MongoId($pId)), array('$set'=> array("imageUrl" => $nFileName)));
     break;
 }
 
