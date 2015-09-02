@@ -41,7 +41,6 @@ foreach($arr as $line){
         $collection->update(array("_id" => new MongoId($pId)), array('$set'=> array("imageUrl" => $nFileName)));
         $nCount++;
     } else {
-        $nCount++;
         $nFileName = $baseUrl.$barCode.".png";
         echo "File not exists, not changing url - ". $nFileName."\n";
     }
