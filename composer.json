@@ -6,7 +6,8 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "solarium/solarium": "2.4.0"
+        "solarium/solarium": "2.4.0",
+        "phpoffice/phpexcel" : "1.8.1"
     },
     "minimum-stability": "dev"
 }

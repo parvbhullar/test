@@ -28,7 +28,8 @@ $baseUrl = 'http://d2k9z4241j7cyd.cloudfront.net/';
 $basePath = '/home/gce3/nc/OrderImage/';
 $nFileName = $baseUrl."noimage.png";
 
-$collection->update(array("imageUrl" => "http://finisfun.com/mavericks/OrderImage/noimage.png"),
+$collection->update(
+    array("imageUrl" => "http://finisfun.com/mavericks/OrderImage/noimage.png"),
     array('$set'=> array("imageUrl" => $nFileName)),
     array("upsert" => true, "multiple" => true)
 );

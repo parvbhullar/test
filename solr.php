@@ -18,8 +18,8 @@ require(__DIR__.'/vendor/autoload.php');
 //        )
 //    )
 //);
-//$server = "178.63.79.68";
-$server = "188.40.100.77";
+$server = "178.63.79.68";
+//$server = "188.40.100.77";
 $config = array(
     'adapteroptions' => array(
         'host' => $server,
@@ -29,7 +29,7 @@ $config = array(
     )
 );
 
-$limit = 5;
+$limit = 10;
 $offset = 0;
 // create a client instance
 $client = new Solarium_Client($config);
@@ -68,11 +68,11 @@ $nq = $keyword;
 
 $partnerId = "55787dcbf41d992b0e8d3e46";
 
-$q = ("(name:($nq)) OR (name:($nq*)) OR (name_s:($keyword*)^5)");
+$q = ("(name:($nq)) OR (name:($nq*)) OR (name_suggest:($keyword)^5)");
 $q = "($q) AND (partnerId:$partnerId)";
 $q = urlencode($q);
 //$url = "http://$server:8080/solr/collectionv2/select?q=$q&rows=$limit&start=$offset&wt=json&indent=true";
-$url = "http://188.40.100.77:8080/solr/collectionv2/select?q=$q&rows=$limit&start=$offset&wt=json&indent=true";
+$url = "http://$server:8080/solr/collectionv2/select?q=$q&rows=$limit&start=$offset&wt=json&indent=true";
 $code = json_decode(file_get_contents($url),true);
 
 print_r($code);
