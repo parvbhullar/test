@@ -17,7 +17,7 @@ class UpdateProducts
     {
         try {
 //            $inputFileName = './php-excel/final-item-suggestion-sheet.xlsx';
-            $inputFileName = './php-excel/complete_data.xlsx';
+            $inputFileName = './data/bigbasket-price-check.xlsx';
             $rows = $this->readExcel($inputFileName);
             $this->updateMongo($rows);
         } catch (\Exception $e) {
@@ -41,25 +41,11 @@ class UpdateProducts
         return $sheetData;
     }
 
-//[A] barcode => 8.44E+10
-//[B] d => 0
-//[C] _id => 55cd2a14f41d99e5517787eb
-//[D] TYPE=>
-//[E] NAME => St Dalfour Wild Blueberry Jam
-//[F] quantity=> 284 g
-//[G] Price => 240
-//[H] product => Jam
-//[I] brand => St Dalfour
-//[J] variant => Wild Blueberry
-//[K] category => Preserved & Ready To Cook Items
-//[L] categoryId => 4
-//[M] subCategory => Spreads & Jam
-//[N] subCategoryId => 9
-//[O] imageUrl => http://d2k9z4241j7cyd.cloudfront.net/55cd2a14f41d99e5517787eb.png
-//[P] city => Bangalore
-//[Q] cityId => 1
-//[R] Store Sales Data => 2
-//[S] NC Sales Data => 0
+//
+//barcode
+//BB ID
+//Done BY
+//name	quantity	Qty in BB	Correct	MRP Price	price	category	categoryId	subCategory	subCategoryId
     public function updateMongo($rows)
     {
 
@@ -71,8 +57,7 @@ class UpdateProducts
         $dbname = 'NinjaCart';
 // Connect to test database
 //$m = new Mongo("mongodb://$dbhost");
-        $m = new Mongo("mongodb://Ninja_Cart_Admin:ngsjtltkktltjsgn@$dbhost/NinjaCart", array("connectTimeoutMS" => "180000"));
-//        $m = new Mongo("mongodb://Ninja_Cart_Admin:Ucanwin888@$dbhost/NinjaCart", array("connectTimeoutMS" => "180000"));
+        $m = new Mongo("mongodb://Ninja_Cart_Admin:Ucanwin888@$dbhost/NinjaCart", array("connectTimeoutMS" => "180000"));
 //        $m =  new Mongo("mongodb://$dbhost/NinjaCart");
         $db = $m->$dbname;
 
@@ -92,28 +77,28 @@ class UpdateProducts
 //            print_r($line);exit;
 //            $lArr = explode("\t", $line);
             $barCode = trim($line["A"]);
+            $bbBarCode = trim($line["B"]);
             $pId = trim($line["C"]);
 
             $product = $line["H"];
             $brand = $line["I"];
             $variant = $line["J"];
 
-            echo "Updating for $pId\n";
-            try {
-                $pId = new MongoId($pId);
-            } catch (Exception $ex) {
-                print_r($ex->getMessage());
-                $pId = false;
-            }
+//            echo "Updating for $pId\n";
+//            try {
+//                $pId = new MongoId($pId);
+//            } catch (Exception $ex) {
+//                print_r($ex->getMessage());
+//                $pId = false;
+//            }
+            echo "$barCode - $bbBarCode \n";
 
-            if ($pId) {
+            if (trim($bbBarCode)) {
                 $result = $collection->update(
-                    array("_id" => $pId),
+                    array("barcode" => $barCode),
                     array('$set' =>
                         array(
-                            "product" => trim($product) == "0" ? "" : trim($product),
-                            "brand" => trim($brand) == "0" ? "" : trim($brand),
-                            "variant" => trim($variant) == "0" ? "" : trim($variant)
+                            "bigBasketBarcode" => trim($bbBarCode) == "0" ? "" : trim($bbBarCode)
                         )
                     ),
                     array(
@@ -121,30 +106,11 @@ class UpdateProducts
                         'multiple' => true
                     )
                 );
-//                print_r($result);
-                if ($result) {
-                    echo "Updating ProductShopTable for $pId\n";
-                    $collection2 = $db->ProductShopTable;
-                    $result = $collection2->update(
-                        array("productId" => $pId),
-                        array('$set' =>
-                            array(
-                                "product" => trim($product) == "0" ? "" : trim($product),
-                                "brand" => trim($brand) == "0" ? "" : trim($brand),
-                                "variant" => trim($variant) == "0" ? "" : trim($variant)
-                            )
-                        ),
-                        array(
-                            'upsert' => false,
-                            'multiple' => true
-                        )
-                    );
-//                    print_r($result);
-                }
+//                print_r($result)
             }
             $i++;
 
-//            if ($i > 20)
+//            if ($i > 2)
 //                break;
         }
     }
