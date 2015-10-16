@@ -22,10 +22,11 @@ require(__DIR__.'/vendor/autoload.php');
 $limit = 1000;
 $offset = 0;
 // create a client instance
-$client = new Solarium_Client($config);
+//$client = new Solarium_Client($config);
 
 // get a select query instance
 $query = $client->createSelect();
+$keyword = "";
 
 $limit = isset($argv[2]) ? $argv[2] : 1000;
 $offset = isset($argv[1]) ? $argv[1] : 0;
